@@ -1,0 +1,264 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png"> -->
+  <title>
+    Automatic College Routine Generator
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <!-- Nucleo Icons -->
+
+  <link href="{% static 'routine/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <!-- CSS Files -->
+  <link id="pagestyle" href="{% static 'routine/css/material-dashboard.css' %}" rel="stylesheet" />
+</head>
+<script>
+
+  function yesnoCheck(that) 
+  {
+      if (that.value == "Yes") 
+      {
+          document.getElementById("ok").style.display = "block";
+      }
+      else
+      {
+          document.getElementById("ok").style.display = "none";
+      }
+      if (that.value == "No")
+      {
+          document.getElementById("notok").style.display = "block";
+      }
+      else
+      {
+          document.getElementById("notok").style.display = "none";
+      }
+  }
+  </script>
+<body class="g-sidenav-show  bg-gray-200">
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand m-0" href="#" target="_blank">
+        <img src="{% static 'routine/img/logo-ct.png'%}" class="navbar-brand-img h-100" alt="main_logo">
+        <span class="ms-1 font-weight-bold text-white">Routine Generator</span>
+      </a>
+    </div>
+    <hr class="horizontal light mt-0 mb-2">
+    <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link text-white active bg-gradient-primary" href="{% url 'homepage' %}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">dashboard</i>
+            </div>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link text-white " href="{% url 'logout' %}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">login</i>
+            </div>
+            <span class="nav-link-text ms-1">Log Out</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-white " href="../pages/sign-in.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">login</i>
+            </div>
+            <span class="nav-link-text ms-1">Sign In</span>
+          </a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link text-white " href="../pages/sign-up.html">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">assignment</i>
+            </div>
+            <span class="nav-link-text ms-1">Sign Up</span>
+          </a>
+        </li> -->
+        {% endif %}
+  </aside>
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="text-dark active" href="{% url 'homepage' %}">Computer</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page"><a href="{% url 'computer_batch' %}">Years</li></a> 
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Second Year</li>
+          </ol>
+        </nav>
+        {% if request.user.is_authenticated %}
+          <ul class="navbar-nav  justify-content-end">
+            <li class="nav-item d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+                <i class="fa fa-user me-sm-1"></i>
+                <span class="d-sm-inline d-none">{{request.user}}</span>
+              </a>
+            </li>
+          {% endif %}
+          <!-- <ul class="navbar-nav  justify-content-end">
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </a>
+            </li>
+            <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0">
+                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+              </a>
+            </li>
+            <li class="nav-item dropdown pe-2 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-bell cursor-pointer"></i>
+              </a>
+              <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="my-auto">
+                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                      </div>> -->
+                      </nav>
+                      <!-- End Navbar -->
+                      <div class="container">
+                        <br>
+                          <h1>Computer Department Second Year data</h1>
+                        <br>
+                        <div id="form">
+                            <style>
+                                input[type=text], select {
+                                  padding: 12px 20px;
+                                  margin: 8px 0;
+                                  border: 1px solid #ccc;
+                                  border-radius: 4px;
+                                  box-sizing: border-box;
+                                  font-size: large;
+                                }
+                                </style>
+                          <form action="{% url 'addComputersecond' %}" method="POST">
+                            {% csrf_token %}
+
+                            {% if messages %}
+                            {% for message in messages %}
+                              <div class="container-fluid p-0">
+                                <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+                                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                  {{ message }}
+                                </div>
+                              </div>
+                            {% endfor %}
+                            {% endif %}
+
+
+                            <label for="batch">Choose a batch:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <select name="batch" id="batch">
+                              <option value="Second">Second Year</option>
+                            </select>
+                            <br>
+                            <label for="semester" name = "semester" >Choose a semester:</label>
+                            <select name="semester" id="batch">
+                              <option value="First">First Part</option>
+                              <option value="Second">Second Part</option>
+                            </select>
+                            <br>
+                            <div class="form-group">
+                              <label for="Name">Lecturer Name</label>
+                              <input type="text" name="Lecturer_Name" class="form-control form-data" id="Lecturer Name">
+                            </div>
+                            <div class="form-group">
+                              <label for="lecCodeLst">Lecturer Namecode</label>
+                              <input type="text" name = "Lecturer_Code" class="form-control form-data" id="Lecturer Namecode">
+                            </div>
+                            <div class="form-group">
+                              <label for="lecId">Lecturer Id</label>
+                              <input type="text" name = "Lecturer_Id" class="form-control form-data" id="Lecturer Id">
+                            </div>
+                            <div class="form-group">
+                                <label for="lecId">Lecturer Subject</label>
+                                <input type="text" name = "Lecturer_Subject" class="form-control form-data" id="Lecturer Subject">
+                              </div>
+                              <div class="form-group">
+                                <label for="lecId">Number of Theory/Tutorial Class per week</label>
+                                <input type="text" name="Lecturer_Period" class="form-control form-data" id="Lecturer Subject">
+                              </div>
+                              <p> <strong>The lab should be entered not on the basis of teacher but on the basis of room and period.</strong> </p>
+
+                              <div class="form-group">
+                                <label for="selector">Lab Room: </label>
+                                <input type="text" name="Lab_Class" placeholder="If two lab then: Physics,Chemistry[Note: Must be separated by ,] if single than : Physics" class="form-control form-data" id="Lecturer Subject">
+                              </div>
+                              <div class="form-group">
+                                <label for="selector">Lab Subject: </label>
+                                <input type="text" name="Lab_Subject" placeholder="Physics,Chemistry" class="form-control form-data" id="Lecturer Subject">
+                              </div>
+                            <div class="form-group">
+                                <label>Lab Lecturer Id:</label> 
+                                <input type="text" placeholder="Id of teachers in above lab: Eg. 1,4,5" name="Lab_Lec_Period" class="form-control form-data" >
+                            </div>
+                            <input type="submit" value="Submit" class="btn btn-primary">
+                            <!-- <button type="submit" value="submit" class="btn btn-primary">Submit</button> -->
+                          </form>
+                        </div>
+                      </div>
+                      
+                        <footer class="footer py-4  ">
+                          <div class="container-fluid">
+                            <div class="row align-items-center justify-content-lg-between">
+                              <div class="col-lg-6 mb-lg-0 mb-4">
+                                <div class="copyright text-center text-sm text-muted text-lg-start">
+                                  © <script>
+                                    document.write(new Date().getFullYear())
+                                  </script>
+                                  </div>
+                                  Made by
+                                  Automatic College Routine Generator Team
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </footer>
+                      </div>
+                    </main>
+                    </div>
+                    <script>
+                      var win = navigator.platform.indexOf('Win') > -1;
+                      if (win && document.querySelector('#sidenav-scrollbar')) {
+                        var options = {
+                          damping: '0.5'
+                        }
+                        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+                      }
+                    </script>
+                    <!-- Github buttons -->
+                    <script async defer src="https://buttons.github.io/buttons.js"></script>
+                    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+                    <script src="{% static 'routine/js/material-dashboard.min.js' %}"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+                    
+                  </body>
+
+                    </html>

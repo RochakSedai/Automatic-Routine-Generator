@@ -1,0 +1,395 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="{% static 'routine/img/favicon.png' %}"> -->
+  <title>
+    Automatic College Routine Generator
+  </title>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  
+  <!-- CSS Files -->
+  <link id="pagestyle" href="{% static 'routine/css/material-dashboard.css' %}" rel="stylesheet" />
+  <link id="pagestyle" href="{% static 'routine/css/about.css' %}" rel="stylesheet" />
+</head>
+
+<body class="g-sidenav-show  bg-gray-200">
+
+  
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand m-0" target="_blank">
+        <img src="{% static 'routine/img/logo-ct.png'%}" class="navbar-brand-img h-100" alt="main_logo">
+        <span class="ms-1 font-weight-bold text-white">Routine Generator</span>
+      </a>
+    </div>
+    <hr class="horizontal light mt-0 mb-2">
+    
+    <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link text-white active bg-gradient-primary" href="{% url 'homepage' %}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">dashboard</i>
+            </div>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link text-white " href="{% url 'logout' %}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">login</i>
+            </div>
+            <span class="nav-link-text ms-1">Log Out</span>
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-white " href="{% url 'login' %}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">login</i>
+            </div>
+            <span class="nav-link-text ms-1">Sign In</span>
+          </a>
+        </li> 
+
+        <!-- <li class="nav-item">
+          <a class="nav-link text-white " href="{% url 'registration' %}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">assignment</i>
+            </div>
+            <span class="nav-link-text ms-1">Sign Up</span>
+          </a>
+        </li> -->
+        {% endif %}
+      </ul>
+    </div>
+  </aside>
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <!-- Navbar -->
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+      <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Dashboard</li>
+          </ol>
+          <h6 class="font-weight-bolder mb-0">Dashboard</h6>
+        </nav>
+        {% if request.user.is_authenticated %}
+          <ul class="navbar-nav  justify-content-end">
+            <li class="nav-item d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+                <i class="fa fa-user me-sm-1"></i>
+                <span class="d-sm-inline d-none">{{request.user}}</span>
+              </a>
+            </li>
+          {% endif %}
+          
+            <!-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="sidenav-collapse-main">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </a>
+            </li> -->
+            <!-- <li class="nav-item px-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0">
+                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+              </a>
+            </li>
+            <li class="nav-item dropdown pe-2 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-bell cursor-pointer"></i>
+              </a> -->
+              <!-- <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                <li class="mb-2">
+                  <a class="dropdown-item border-radius-md" href="javascript:;">
+                    <div class="d-flex py-1">
+                      <div class="my-auto">
+                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                        </div>
+                      </div> -->
+                      </nav>
+                      
+                      <!-- End Navbar -->
+                      <div class="container-fluid py-4">
+                        <div class="row">
+                          {% if request.user.is_superuser %}
+                          <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                            <div class="card">
+                              <div class="card-header p-3 pt-2">
+                                <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                                  <i class="material-icons opacity-10">person</i>
+                                </div>
+                              </div>
+                              <br>
+                              <hr class="dark horizontal my-0">
+                              <div class="card-footer p-3">
+                              <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span><a href="{% url 'computer_batch' %}">Add Computer data</p></a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                            <div class="card">
+                              <div class="card-header p-3 pt-2">
+                                <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                                  <i class="material-icons opacity-10">person</i>
+                                </div>
+                              </div>
+                              <br>
+                              <hr class="dark horizontal my-0">
+                              <div class="card-footer p-3">
+                                <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span><a href="{% url 'electrical_batch' %}">Add Electrical data</p></a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                            <div class="card">
+                              <div class="card-header p-3 pt-2">
+                                <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                                  <i class="material-icons opacity-10">weekend</i>
+                                </div>
+                              </div>
+                              <br>
+                              <hr class="dark horizontal my-0">
+                              <div class="card-footer p-3">
+                                <p class="mb-0"><span class="text-danger text-sm font-weight-bolder"></span><a href="{% url 'generate_routine' %}">Generate Routine</p></a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-3 col-sm-6">
+                            <div class="card">
+                              <div class="card-header p-3 pt-2">
+                                <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                                  <i class="material-icons opacity-10">weekend</i>
+                                </div>
+                              </div>
+                              <br>
+                              <hr class="dark horizontal my-0">
+                              <div class="card-footer p-3">
+                                <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span><a href="{% url 'teacher_routine' %}">View Teacher Routine</p></a>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-xl-3 col-sm-6 mt-4">
+                            <div class="card">
+                              <div class="card-header p-3 pt-2">
+                                <div class="icon icon-lg icon-shape bg-gradient-danger shadow-danger text-center border-radius-xl mt-n4 position-absolute">
+                                  <i class="material-icons opacity-10">weekend</i>
+                                </div>
+                              </div>
+                              <br>
+                              <hr class="dark horizontal my-0">
+                              <div class="card-footer p-3">
+                                <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span><a href="{% url 'view_routine' %}">View Routine</p></a>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-xl-3 col-sm-6 mt-4">
+                            <div class="card">
+                              <div class="card-header p-3 pt-2">
+                                <div class="icon icon-lg icon-shape bg-gradient-danger shadow-danger text-center border-radius-xl mt-n4 position-absolute">
+                                  <i class="material-icons opacity-10">person</i>
+                                </div>
+                              </div>
+                              <br>
+                              <hr class="dark horizontal my-0">
+                              <div class="card-footer p-3">
+                                <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span><a href="{% url 'registration' %}">Add User</p></a>
+                              </div>
+                            </div>
+                          </div>
+
+                          {% elif request.user.is_active %}
+                          <div class="col-xl-3 col-sm-6 mt-5">
+                            <div class="card">
+                              <div class="card-header p-3 pt-2">
+                                <div class="icon icon-lg icon-shape bg-gradient-danger shadow-danger text-center border-radius-xl mt-n4 position-absolute">
+                                  <i class="material-icons opacity-10">weekend</i>
+                                </div>
+                              </div>
+                              <br>
+                              <hr class="dark horizontal my-0">
+                              <div class="card-footer p-3">
+                                <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span><a href="{% url 'view_routine' %}">View Routine</p></a>
+                              </div>
+                            </div>
+                          </div>
+
+                          {% else %}
+                          <div class="row h-100 align-items-center py-5">
+                            <div class="col-lg-6">
+                              <h1 class="display-4">Automatic Routine Generator</h1>
+                              <p class="lead text-muted mb-0">Automatic Routine Generator is a web based application which
+                                 guides you about time table management System</p>
+                              <p class="lead text-muted mb-0"><strong> Smart People Choose Generator</strong></p>
+                             
+                            </div>
+                            <div class="col-lg-6 d-none d-lg-block"><img src="https://bootstrapious.com/i/snippets/sn-about/illus.png" alt="" class="img-fluid"></div>
+                          </div>
+                        
+                      
+                      <div class="bg-white py-5">
+                        <div class="container py-5">
+                          <div class="row align-items-center mb-5">
+                            <div class="col-lg-6 order-2 order-lg-1"><i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
+                              <h2 class="font-weight-light">Genetic Algorithm</h2>
+                              <p class="font-italic text-muted mb-4">Genetic algorithms are a type of evolutionary algorithms 
+                                that are inspired by the process of natural selection. <strong>A genetic algorithm is a search heuristic that
+                                  is inspired by Charles Darwin’s theory of natural evolution.</strong>  
+                                 This algorithm reflects the process of natural selection where the 
+                                 fittest individuals are selected for reproduction in order to produce offspring of the next generation.</p>
+                            </div>
+                            <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img src="{% static 'routine/img/gene.jpg' %}" alt="" class="img-fluid mb-4 mb-lg-0"></div>
+                          </div>
+                          <!-- <div class="row align-items-center">
+                            <div class="col-lg-5 px-5 mx-auto"><img src="" alt="" class="img-fluid mb-4 mb-lg-0"></div>
+                            <div class="col-lg-6"><i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
+                              <h2 class="font-weight-light">Lorem ipsum dolor sit amet</h2>
+                              <p class="font-italic text-muted mb-4"></p>
+                            </div>
+                          </div> -->
+                        </div>
+                      </div>
+                      
+                      <div class="bg-light py-5">
+                        <div class="container py-5">
+                          <div class="row mb-4">
+                            <div class="col-lg-5">
+                              <h2 class="display-4 font-weight-light">Meet our team</h2>
+                              
+                            </div>
+                          </div>
+                      
+                          <div class="row text-center">
+                            <!-- Team item-->
+                            <div class="col-xl-3 col-sm-6 mb-5">
+                              <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'routine/img/man (1).png' %}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                                <h5 class="mb-0">Anup Kafle</h5><span class="small text-uppercase text-muted">KCE075BCT011</span>
+                                <ul class="social mb-0 list-inline mt-3">
+                                  <li class="list-inline-item"><a href="https://www.facebook.com/anupkafle24" target="_blank" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
+                                  <li class="list-inline-item"><a href="https://github.com/anupkafle" target="_blank" class="social-link"><i class="fa fa-github"></i></a></li>
+                                  <li class="list-inline-item"><a href="https://www.linkedin.com/in/anup-kafle-6617a3196/" target="_blank" class="social-link"><i class="fa fa-linkedin"></i></a></li>
+                                </ul>
+                              </div>
+                            </div>
+                            <!-- End-->
+                      
+                            <!-- Team item-->
+                            <div class="col-xl-3 col-sm-6 mb-5">
+                              <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'routine/img/man (2).png' %}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                                <h5 class="mb-0">Anushil Timsina</h5><span class="small text-uppercase text-muted">KCE075BCT012</span>
+                                <ul class="social mb-0 list-inline mt-3">
+                                  <li class="list-inline-item"><a href="https://www.facebook.com/anushil.timsina.9" target="_blank" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
+                                  <li class="list-inline-item"><a href="https://github.com/Anushil007" target="_blank" class="social-link"><i class="fa fa-github"></i></a></li>
+                                  <li class="list-inline-item"><a href="https://www.linkedin.com/in/anushil-timsina-2813a11b6/" target="_blank" class="social-link"><i class="fa fa-linkedin"></i></a></li>
+                                </ul>
+                              </div>
+                            </div>
+                            <!-- End-->
+                      
+                            <!-- Team item-->
+                            <div class="col-xl-3 col-sm-6 mb-5">
+                              <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'routine/img/man.png' %}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                                <h5 class="mb-0">Rochak Sedai</h5><span class="small text-uppercase text-muted">KCE075BCT030</span>
+                                <ul class="social mb-0 list-inline mt-3">
+                                  <li class="list-inline-item"><a href="https://www.facebook.com/sedairochak" target="_blank" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
+                                  <li class="list-inline-item"><a href="https://github.com/RochakSedai" target="_blank" class="social-link"><i class="fa fa-github"></i></a></li>
+                                  <li class="list-inline-item"><a href="https://www.linkedin.com/in/rochak-sedai-7313811b7/" target="_blank" class="social-link"><i class="fa fa-linkedin"></i></a></li>
+                                </ul>
+                              </div>
+                            </div>
+                            <!-- End-->
+                      
+                            <!-- Team item-->
+                            <div class="col-xl-3 col-sm-6 mb-5">
+                              <div class="bg-white rounded shadow-sm py-5 px-4"><img src="{% static 'routine/img/man (3).png' %}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                                <h5 class="mb-0">Sandeep Subedi</h5><span class="small text-uppercase text-muted">KCE075BCT039</span>
+                                <ul class="social mb-0 list-inline mt-3">
+                                  <li class="list-inline-item"><a href="https://www.facebook.com/sandeep.subedi.735" target="_blank" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
+                                  <li class="list-inline-item"><a href="https://github.com/SandeepSubedi" target="_blank" class="social-link"><i class="fa fa-github"></i></a></li>
+                                  <li class="list-inline-item"><a href="https://www.linkedin.com/in/sandeep-subedi-541395184/" target="_blank" class="social-link"><i class="fa fa-linkedin"></i></a></li>
+                                </ul>
+                              </div>
+                            </div>
+                            </div>
+                          </div>
+                        </div>
+                            <!-- End-->
+                      
+                          {% endif %}
+
+                          <!-- <div class="col-xl-3 col-sm-6 mt-5">
+                            <div class="card">
+                              <div class="card-header p-3 pt-2">
+                                <div class="icon icon-lg icon-shape bg-gradient-danger shadow-danger text-center border-radius-xl mt-n4 position-absolute">
+                                  <i class="material-icons opacity-10">room</i>
+                                </div>
+                              </div>
+                              <br>
+                              <hr class="dark horizontal my-0">
+                              <div class="card-footer p-3">
+                                <p class="mb-0"><span class="text-success text-sm font-weight-bolder"></span><a href="{% url 'add_labroom' %}">Add Lab Room</p></a>
+                              </div>
+                            </div>
+                          </div> -->
+                        </div>
+                        <footer class="footer py-4">
+                          <div class="container-fluid">
+                            <div class="row align-items-center justify-content-lg-between">
+                              <div class="col-lg-6 mb-lg-0 mb-4">
+                                <div class="copyright text-center text-sm text-muted text-lg-start">
+                                  © <script>
+                                    document.write(new Date().getFullYear())
+                                  </script>
+                                  </div>
+                                  Made by
+                                  Automatic College Routine Generator Team
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </footer>
+                      </div>
+                    </main>
+                    </div>
+                    <script>
+                      var win = navigator.platform.indexOf('Win') > -1;
+                      if (win && document.querySelector('#sidenav-scrollbar')) {
+                        var options = {
+                          damping: '0.5'
+                        }
+                        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+                      }
+                    </script>
+                    
+                    <!-- Github buttons -->
+                    <script async defer src="https://buttons.github.io/buttons.js"></script>
+                    
+                    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+                    <script src="{% static 'routine/js/material-dashboard.min.js' %}"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+                    </body>
+
+                    </html>
